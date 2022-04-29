@@ -56,7 +56,14 @@ public class MensagemAdapter extends
         textView.setText(av.getMensagem());
 
         ImageView imageView = holder.itemView.findViewById(R.id.imageViewMensagem);
-        imageView.setImageResource(R.drawable.person1);
+        int userId = av.getUserId();
+        if(userId == 1){
+            imageView.setImageResource(R.drawable.person1);
+        }
+        else if(userId == 2){
+            imageView.setImageResource(R.drawable.person2);
+        }
+
     }
 
     public static class MensagemHolder

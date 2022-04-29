@@ -7,14 +7,20 @@ public class Mensagem implements Serializable {
     private String Mensagem;
     private LocalDateTime CriadoEm;
     private String Foto;
-
-    public Mensagem(String mensagem, String foto)
+    private int UserId;
+    public Mensagem( int userId, String mensagem, String foto)
     {
+        UserId = userId;
+
         Mensagem = mensagem;
         Foto = foto;
 
         CriadoEm = LocalDateTime.now();
     }
+
+    public int getUserId() { return UserId; }
+
+    public Boolean sameUser(int id) { return  id == UserId; }
 
     public String getMensagem(){
         return Mensagem;

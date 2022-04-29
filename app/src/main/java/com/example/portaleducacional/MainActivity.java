@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Tela de inicialização
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         //Comportamento da view que foi instanciado antes
         Button buttonAvisos = findViewById(R.id.btnAvisos);

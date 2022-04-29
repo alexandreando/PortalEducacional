@@ -6,11 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".MensagemPage">
 
+    <TextView
+        android:id="@+id/txtDigiteMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:text="Digite sua mensagem:"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtMensagem2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewMensagens"
+        app:layout_constraintVertical_bias="1.0" />
+
     <Button
-        android:id="@+id/btnEnviar2"
+        android:id="@+id/btnEnviarMsg"
         android:layout_width="65dp"
         android:layout_height="47dp"
         android:layout_margin="10dp"
+        android:background="@drawable/send"
         android:text="GO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +46,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMensagens"
         android:layout_width="409dp"
-        android:layout_height="650dp"
+        android:layout_height="550dp"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toTopOf="@+id/txtMensagem2"
         app:layout_constraintTop_toTopOf="parent"
