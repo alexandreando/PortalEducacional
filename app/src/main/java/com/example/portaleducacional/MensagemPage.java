@@ -1,5 +1,6 @@
 package com.example.portaleducacional;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +15,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import adapters.AvisoAdapter;
 import adapters.MensagemAdapter;
@@ -25,6 +34,10 @@ import services.FirebaseService;
 
 public class MensagemPage extends AppCompatActivity {
 
+    FirebaseFirestore _db;
+    ArrayList<Mensagem> mensagens;
+    RecyclerView recyclerView;
+    MensagemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +47,19 @@ public class MensagemPage extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Mensagens");
 
+        //Inicializadores
+        _db = FirebaseFirestore.getInstance();
+        mensagens = new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerViewMensagens);
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new MensagemAdapter(mensagens, this);
+        recyclerView.setAdapter(adapter);
+
+        //Adicionar
         FirebaseService service = new FirebaseService(this);
-
         Button buttonEnviarMensagem = findViewById(R.id.btnEnviarMsg);
-
         buttonEnviarMensagem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,19 +72,29 @@ public class MensagemPage extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewMensagens);
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
+        _db.collection("mensagens").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                            for (DocumentSnapshot d : list) {
+                                Mensagem c = d.toObject(Mensagem.class);
 
-        ArrayList<Mensagem> mensagens = service.GetMensagens();
+                                mensagens.add(c);
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-        MensagemAdapter mensagemListAdapter = new MensagemAdapter(mensagens);
-        recyclerView.setAdapter(mensagemListAdapter);
-
-        recyclerView.setLayoutManager(linearLayoutManager);
+            }
+        });
     }
 
-    @Override
+   @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
