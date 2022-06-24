@@ -8,6 +8,10 @@ public class Mensagem implements Serializable {
     private LocalDateTime CriadoEm;
     private String Foto;
     private int UserId;
+
+    public Mensagem(){
+
+    }
     public Mensagem( int userId, String mensagem, String foto)
     {
         UserId = userId;
@@ -36,5 +40,13 @@ public class Mensagem implements Serializable {
 
     public void setFoto(String foto){
         Foto = foto;
+    }
+
+    public LocalDateTime getCriadoEm(){
+        return CriadoEm;
+    }
+
+    public void setCriadoEm(LocalDateTime criadoEm){
+        CriadoEm = criadoEm;
     }
 }

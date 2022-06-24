@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.portaleducacional.MensagemPage;
 import com.example.portaleducacional.R;
 
 import java.util.ArrayList;
@@ -52,18 +53,19 @@ public class MensagemAdapter extends
     public void onBindViewHolder(@NonNull MensagemHolder holder, int position) {
         Mensagem av = mensagens.get(position);
 
-        TextView textView =  holder.itemView.findViewById(R.id.textViewMensagem);
-        textView.setText(av.getMensagem());
+        if(av != null){
+            TextView textView =  holder.itemView.findViewById(R.id.textViewMensagem);
+            textView.setText(av.getMensagem());
 
-        ImageView imageView = holder.itemView.findViewById(R.id.imageViewMensagem);
-        int userId = av.getUserId();
-        if(userId == 1){
-            imageView.setImageResource(R.drawable.person1);
+            ImageView imageView = holder.itemView.findViewById(R.id.imageViewMensagem);
+            int userId = av.getUserId();
+            if(userId == 1){
+                imageView.setImageResource(R.drawable.person1);
+            }
+            else if(userId == 2){
+                imageView.setImageResource(R.drawable.person2);
+            }
         }
-        else if(userId == 2){
-            imageView.setImageResource(R.drawable.person2);
-        }
-
     }
 
     public static class MensagemHolder

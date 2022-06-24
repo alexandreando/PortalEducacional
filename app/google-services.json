@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "901876525414",
+    "project_id": "up-desenvolvimento-sistemas-2",
+    "storage_bucket": "up-desenvolvimento-sistemas-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901876525414:android:93461a284bea3a419bc0a7",
+        "android_client_info": {
+          "package_name": "com.example.portaleducacional"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901876525414-46c1g9leb0lm16jpcoccaa9bo259fkdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxh31uVwAZvGUdAGV_F9j6YkCGV4JeIOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901876525414-46c1g9leb0lm16jpcoccaa9bo259fkdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

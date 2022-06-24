@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,8 +21,10 @@ import adapters.AvisoAdapter;
 import adapters.MensagemAdapter;
 import models.Aviso;
 import models.Mensagem;
+import services.FirebaseService;
 
 public class MensagemPage extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class MensagemPage extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Mensagens");
+
+        FirebaseService service = new FirebaseService(this);
 
         Button buttonEnviarMensagem = findViewById(R.id.btnEnviarMsg);
 
@@ -40,32 +45,19 @@ public class MensagemPage extends AppCompatActivity {
 
                 String text = txtView.getText().toString();
 
-                if(text != null && !text.isEmpty()){
-                    txtView.setText("");
-
-                    new AlertDialog.Builder(MensagemPage.this)
-                            .setTitle("Mensagem enviada!")
-                            .setMessage("Sua mensagem está sendo processada :)")
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Continue with delete operation
-                                }
-                            })
-                            .setIcon(R.drawable.message)
-                            .show();
-                }
+                Mensagem mensagem = new Mensagem(1, text, "");
+                service.AdicionarMensagem(mensagem);
             }
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewMensagens);
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(this);
 
-        ArrayList<Mensagem> mensagens = getMensagens();
+        ArrayList<Mensagem> mensagens = service.GetMensagens();
 
         MensagemAdapter mensagemListAdapter = new MensagemAdapter(mensagens);
         recyclerView.setAdapter(mensagemListAdapter);
-
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(linearLayoutManager);
     }
@@ -85,14 +77,4 @@ public class MensagemPage extends AppCompatActivity {
         return true;
     }
 
-    private ArrayList<Mensagem> getMensagens(){
-        ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
-
-        mensagens.add(new Mensagem(1,"Mensagem 1", ""));
-        mensagens.add(new Mensagem(2,"Mensagem 2", ""));
-        mensagens.add(new Mensagem(1,"Mensagem 3", ""));
-        mensagens.add(new Mensagem(2,"AAAAAAAAAAAAAA", ""));
-
-        return mensagens;
-    }
 }
