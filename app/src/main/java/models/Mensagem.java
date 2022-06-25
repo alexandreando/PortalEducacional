@@ -1,13 +1,16 @@
 package models;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Mensagem implements Serializable {
     private String Mensagem;
-    private LocalDateTime CriadoEm;
     private String Foto;
     private int UserId;
+    private Timestamp Criacao;
 
     public Mensagem(){
 
@@ -19,7 +22,7 @@ public class Mensagem implements Serializable {
         Mensagem = mensagem;
         Foto = foto;
 
-        CriadoEm = LocalDateTime.now();
+        Criacao = Timestamp.now();
     }
 
     public int getUserId() { return UserId; }
@@ -42,11 +45,12 @@ public class Mensagem implements Serializable {
         Foto = foto;
     }
 
-    public LocalDateTime getCriadoEm(){
-        return CriadoEm;
+    public Timestamp getCriacao() {
+        return Criacao;
     }
 
-    public void setCriadoEm(LocalDateTime criadoEm){
-        CriadoEm = criadoEm;
+    public void setCriacao(Timestamp criacao) {
+        Criacao = criacao;
     }
+
 }

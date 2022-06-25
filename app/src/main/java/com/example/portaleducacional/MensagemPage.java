@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +18,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -28,6 +35,7 @@ import java.util.List;
 
 import adapters.AvisoAdapter;
 import adapters.MensagemAdapter;
+import adapters.MensagemAdapter2;
 import models.Aviso;
 import models.Mensagem;
 import services.FirebaseService;
@@ -69,10 +77,19 @@ public class MensagemPage extends AppCompatActivity {
 
                 Mensagem mensagem = new Mensagem(1, text, "");
                 service.AdicionarMensagem(mensagem);
+
+                txtView.setText("");
+                getMensagens();
             }
         });
 
-        _db.collection("mensagens").get()
+        //retrieve direto
+        getMensagens();
+    }
+
+    private void getMensagens() {
+        mensagens.clear();
+        _db.collection("mensagens").orderBy("Criado", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -94,7 +111,7 @@ public class MensagemPage extends AppCompatActivity {
         });
     }
 
-   @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -108,5 +125,4 @@ public class MensagemPage extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-
 }

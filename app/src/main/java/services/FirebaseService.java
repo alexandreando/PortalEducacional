@@ -2,13 +2,10 @@ package services;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.portaleducacional.MensagemPage;
 import com.example.portaleducacional.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +25,7 @@ import models.Mensagem;
 
 public class FirebaseService {
     private FirebaseFirestore _db;
+
     private Context _context;
     private ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
 
@@ -40,8 +38,8 @@ public class FirebaseService {
         Map<String,Object> hashMensagem = new HashMap<>();
         hashMensagem.put("Mensagem", mensagem.getMensagem());
         hashMensagem.put("UserId", mensagem.getUserId());
-        hashMensagem.put("CriadoEm", mensagem.getCriadoEm());
         hashMensagem.put("Foto", mensagem.getFoto());
+        hashMensagem.put("Criado",mensagem.getCriacao());
 
         _db.collection("mensagens")
                 .add(hashMensagem)
@@ -53,7 +51,6 @@ public class FirebaseService {
                                 .setMessage("Sua mensagem foi enviada:)")
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        // Continue with delete operation
                                     }
                                 })
                                 .setIcon(R.drawable.message)
@@ -75,7 +72,6 @@ public class FirebaseService {
             }
         });
 
-
         return mensagens;
     }
 
@@ -88,9 +84,6 @@ public class FirebaseService {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Mensagem m = document.toObject(Mensagem.class);
-                                //String msg = document.getString("Mensagem");
-                                //Mensagem m = new Mensagem();
-                                //m.setMensagem(msg);
                                 mensagens.add(m);
                             }
                             fIrestoreCallback.onCallback(mensagens);

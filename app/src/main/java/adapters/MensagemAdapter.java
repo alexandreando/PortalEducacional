@@ -22,6 +22,7 @@ import models.Mensagem;
 public class MensagemAdapter extends
         RecyclerView.Adapter<MensagemAdapter.MensagemHolder>{
 
+
     ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
     Context context;
     public MensagemAdapter(ArrayList<Mensagem> mensagens, Context context)
